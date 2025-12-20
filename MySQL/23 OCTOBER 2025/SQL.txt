@@ -1,0 +1,47 @@
+DROP TABLE IF EXISTS anggota;
+DROP TABLE IF EXISTS petugas;
+DROP TABLE IF EXISTS buku;
+DROP TABLE IF EXISTS pinjam;
+
+create table anggota (
+    idanggota int not null,
+    nama varchar(60) not null,
+    alamat varchar(100) not null,
+    notelp varchar(16) not null,
+    tempatlahir varchar(60) not null,
+    tgllahir datetime,
+    CONSTRAINT pk_idanggota primary key (idanggota)
+    
+    );
+
+create table petugas (
+    idpetugas int not null,
+    nama varchar(60) not null,
+    notelp varchar(16) not null,
+    alamat varchar(100) not null,
+    CONSTRAINT pk_idpetugas PRIMARY KEY(idpetugas)
+    );
+    
+create table buku (
+    idbuku int not null AUTO_INCREMENT,
+    judul varchar(100) not null,
+    pengarang varchar(80) not null,
+    kategori varchar(40) not null,
+    penerbit varchar(80) not null,
+    tahunterbit varchar(4) NOT NULL,
+    CONSTRAINT pk_idbuku PRIMARY KEY(idbuku)
+    );
+    
+CREATE TABLE pinjam (
+    idpinjam int not null AUTO_INCREMENT,
+    idanggota int not null,
+    idbuku int not null,
+    idpetugas int not null,
+    tglpinjam datetime,
+    tglkembali datetime,
+    keterangan varchar(255),
+    CONSTRAINT pk_idpinjam PRIMARY KEY (idpinjam),
+    CONSTRAINT fk_idanggota FOREIGN KEY (idanggota) REFERENCES anggota(idanggota),
+    CONSTRAINT fk_idbuku FOREIGN KEY (idbuku) REFERENCES buku(idbuku),
+    CONSTRAINT fk_idpetugas FOREIGN KEY (idpetugas) REFERENCES petugas(idpetugas)
+    );

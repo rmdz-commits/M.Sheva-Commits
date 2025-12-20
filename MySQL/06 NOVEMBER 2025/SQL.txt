@@ -1,0 +1,32 @@
+create table obat(
+    id int primary key AUTO_INCREMENT,
+    nama varchar(60) not null,
+    jenis varchar(20) not null,
+    stock int DEFAULT 0
+    );
+    
+create table obatmasuk(
+    id_om int primary key AUTO_INCREMENT,
+    id_obat int,
+    tanggal datetime,
+    jumlah int,
+    CONSTRAINT fk_idobat FOREIGN key(id_obat) REFERENCES obat(id)
+    );
+
+BEGIN
+UPDATE obat SET stock = stock + NEW.jumlah
+WHERE id = NEW.id_obat;
+END
+
+create table obatkeluar(
+    id_ok int primary key AUTO_INCREMENT,
+    id_obat int,
+    tanggal datetime,
+    jumlah int,
+    CONSTRAINT fk_idobat_kl FOREIGN key(id_obat) REFERENCES obat(id)
+    );
+
+BEGIN
+UPDATE obat SET stock = stock - NEW.jumlah
+WHERE id = NEW.id_obat;
+END
